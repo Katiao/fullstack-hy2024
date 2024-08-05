@@ -1,0 +1,1 @@
+export const Header = ({courseTitle}) => <h1>{courseTitle}</h1>
