@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-import { Header, Button, FeedbackCount } from "./Components";
+import { Header, Button } from "./Components";
+
+import { Statistics } from "./Components/Statistics";
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -10,6 +12,11 @@ const App = () => {
   const handleGoodClick = () => setGood(good + 1);
   const handleNeutralClick = () => setNeutral(neutral + 1);
   const handleBadClick = () => setBad(bad + 1);
+
+  const allScores = [good, neutral, bad];
+  const sumOfScores = allScores.reduce((a, b) => a + b, 0);
+  const averageOfScores = sumOfScores / allScores.length;
+  const positivePercentage = sumOfScores > 0 ? (good / sumOfScores) * 100 : 0;
 
   return (
     <div>
@@ -21,9 +28,14 @@ const App = () => {
 
       <Header title="statistics" />
 
-      <FeedbackCount feedback="good" count={good} />
-      <FeedbackCount feedback="neutral" count={neutral} />
-      <FeedbackCount feedback="bad" count={bad} />
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        sumOfScores={sumOfScores}
+        averageOfScores={averageOfScores}
+        positivePercentage={positivePercentage}
+      />
     </div>
   );
 };
