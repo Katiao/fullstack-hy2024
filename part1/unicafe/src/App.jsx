@@ -28,14 +28,18 @@ const App = () => {
 
       <Header title="statistics" />
 
-      <Statistics
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        sumOfScores={sumOfScores}
-        averageOfScores={averageOfScores}
-        positivePercentage={positivePercentage}
-      />
+      {sumOfScores > 0 ? (
+        <Statistics
+          good={good}
+          neutral={neutral}
+          bad={bad}
+          sumOfScores={sumOfScores}
+          averageOfScores={averageOfScores}
+          positivePercentage={positivePercentage}
+        />
+      ) : (
+        "No feedback given"
+      )}
     </div>
   );
 };
