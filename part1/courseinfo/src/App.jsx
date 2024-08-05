@@ -1,12 +1,12 @@
 import { Header, Content, Total } from "./components"
-import { COURSE, COURSE_PARTS, TOTAL_EXERCISES } from "./consts"
+import { COURSE, TOTAL_EXERCISES } from "./consts"
 
 const App = () => {
 
   return (
     <div>
-     <Header courseTitle={COURSE} />
-     <Content courseParts={COURSE_PARTS}/>
+     <Header courseTitle={COURSE.name} />
+     <Content courseParts={COURSE.parts}/>
      <Total totalExercises={TOTAL_EXERCISES} />
     </div>
   )

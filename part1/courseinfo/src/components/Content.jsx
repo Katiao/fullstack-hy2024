@@ -4,7 +4,7 @@ export const Content = ({ courseParts }) => {
       <div>
         {courseParts.map((part, index) => (
           <p key={index}>
-            {part.title} {part.numberOfExercises}
+            {part.name} {part.exercises}
           </p>
         ))}
       </div>
