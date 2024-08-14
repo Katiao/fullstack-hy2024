@@ -1,4 +1,4 @@
-import { FeedbackCount } from "./FeedbackCount";
+import { StatisticLine } from "./StatisticLine";
 
 export const Statistics = ({
   good,
@@ -9,15 +9,15 @@ export const Statistics = ({
   positivePercentage,
 }) => {
   return (
-    <div>
-      <FeedbackCount feedback="good" count={good} />
-      <FeedbackCount feedback="neutral" count={neutral} />
-      <FeedbackCount feedback="bad" count={bad} />
-      <div>all {sumOfScores}</div>
-      <div>average {averageOfScores}</div>
-      <div>positive {positivePercentage} %</div>
-    </div>
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="all" value={sumOfScores} />
+        <StatisticLine text="average" value={averageOfScores} />
+        <StatisticLine text="positive" value={positivePercentage} />
+      </tbody>
+    </table>
   );
 };
-
-export default Statistics;

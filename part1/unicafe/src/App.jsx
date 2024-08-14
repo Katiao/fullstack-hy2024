@@ -19,7 +19,7 @@ const App = () => {
   const positivePercentage = sumOfScores > 0 ? (good / sumOfScores) * 100 : 0;
 
   return (
-    <div>
+    <>
       <Header title="give feedback" />
 
       <Button handleClick={handleGoodClick} text="good" />
@@ -40,7 +40,7 @@ const App = () => {
       ) : (
         "No feedback given"
       )}
-    </div>
+    </>
   );
 };
 
