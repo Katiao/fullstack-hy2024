@@ -1,15 +1,7 @@
-import { Header, Content, Total } from "./components"
-import { COURSE, TOTAL_EXERCISES } from "./consts"
+import { Course } from "./components/Course";
 
 const App = () => {
+  return <Course />;
+};
 
-  return (
-    <div>
-     <Header courseTitle={COURSE.name} />
-     <Content courseParts={COURSE.parts}/>
-     <Total totalExercises={TOTAL_EXERCISES} />
-    </div>
-  )
-}
-
-export default App
+export default App;
