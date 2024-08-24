@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Filter, PersonForm, Persons } from "./components";
-import { MOCK_PERSONS } from "./consts";
 
 const App = () => {
-  const [persons, setPersons] = useState(MOCK_PERSONS);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
