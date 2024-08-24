@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import personsService from "./services/persons";
 import { Filter, PersonForm, Persons } from "./components";
 
 const App = () => {
@@ -9,10 +9,15 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
-    });
-  }, []);
+    personsService
+      .getAllPersons()
+      .then((initialPersons) => {
+        setPersons(initialPersons);
+      })
+      .catch((error) => {
+        alert("Error fetching data: ", error);
+      });
+  }, [persons]);
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -28,19 +33,51 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
+
     if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already added to the phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const person = persons.find((person) => person.name === newName);
+        const changedPerson = { ...person, number: newPhone };
+
+        personsService
+          .updatePerson(person.id, changedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== returnedPerson.id ? person : returnedPerson
+              )
+            );
+            setNewPhone("");
+            setNewName("");
+          })
+          .catch((error) => {
+            alert(`Error updating person: ${error}`);
+          });
+      }
+      setNewPhone("");
+      setNewName("");
       return;
     }
+
     const newPerson = {
       name: newName,
       number: newPhone,
-      id: persons.length + 1,
     };
 
-    setPersons(persons.concat(newPerson));
-    setNewPhone("");
-    setNewName("");
+    personsService
+      .createPerson(newPerson)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewPhone("");
+        setNewName("");
+      })
+      .catch((error) => {
+        alert(`Error creating person: ${error}`);
+      });
   };
 
   return (
@@ -61,7 +98,11 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Persons persons={persons} searchTerm={searchTerm} />
+      <Persons
+        persons={persons}
+        searchTerm={searchTerm}
+        setPersons={setPersons}
+      />
     </>
   );
 };
