@@ -1,0 +1,10 @@
+.search-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.search-box {
+  border: 3px solid #4da6ff;
+  border-radius: 5px;
+}
